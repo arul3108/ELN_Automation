@@ -1,0 +1,29 @@
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+
+def login(user):
+    s = Service("D:/Automation/Drivers/chromedriver-win64/chromedriver.exe")
+    start_time = time.time()
+    driver = webdriver.Chrome(service=s)
+    driver.maximize_window()
+    driver.get("https://logilabelntesting.azurewebsites.net/")
+    organization_field = driver.find_element(by="id", value="idUsername")
+    organization_field.send_keys(user["Organization"])
+    time.sleep(2)
+    orglogin_button = driver.find_element(by="id", value="inputText")
+    orglogin_button.click()
+    time.sleep(2)
+    username_field = driver.find_element(by="id", value="idUsername")
+    username_field.send_keys(user["username"])
+    time.sleep(2)
+    password_field = driver.find_element(by="id", value="idPassword")
+    password_field.send_keys(user["password"])
+    time.sleep(2)
+    login_button = driver.find_element(by="xpath", value="//input[@value='Login']")
+    login_button.click()
+    time.sleep(2)
+    end_time = time.time()
+    print(f"User {user['username']} logged in successfully")
+    print(f"Execution time: {end_time - start_time} seconds")
